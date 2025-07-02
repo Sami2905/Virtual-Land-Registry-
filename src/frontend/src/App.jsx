@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AuthClient } from '@dfinity/auth-client';
 import { backend } from '../../declarations/backend';
+import { getIdentityProvider } from './identity';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,7 +28,7 @@ function App() {
   const login = async () => {
     const authClient = await AuthClient.create();
     await authClient.login({
-      identityProvider: 'https://identity.ic0.app/#authorize',
+      identityProvider: getIdentityProvider(),
       onSuccess: async () => {
         window.location.reload(); // reload to refetch data
       },
