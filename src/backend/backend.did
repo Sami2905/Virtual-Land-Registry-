@@ -1,3 +1,20 @@
+type Coordinates = record { x: nat32; y: nat32 };
+
+type LandNFT = record {
+  id: nat64;
+  name: text;
+  coordinates: Coordinates;
+  size: text;
+  image_data: vec nat8;
+  owner: principal;
+  timestamp: nat64;
+};
+
 service : {
-    "greet": (text) -> (text) query;
-}
+  mint_land: (text, Coordinates, text, vec nat8) -> (nat64);
+  get_all_land: () -> (vec LandNFT) query;
+  get_my_land: () -> (vec LandNFT) query;
+};
+
+
+
