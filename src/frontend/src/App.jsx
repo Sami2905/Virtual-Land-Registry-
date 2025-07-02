@@ -6,6 +6,7 @@ import MintLandForm from "./components/MintLandForm";
 import MyLands from "./components/MyLands";
 import { getIdentityProvider } from "./identity";
 import { createActor } from "./actor";
+import Marketplace from "./components/Marketplace";
 
 function App() {
   const [authClient, setAuthClient] = useState(null);
@@ -76,7 +77,9 @@ function App() {
           {view === "my" && (
             <MyLands principal={principal} backend={backendActor} />
           )}
-          {view === "market" && <p>Marketplace coming soon...</p>}
+          {view === "market" && (
+            <Marketplace principal={principal} backend={backendActor} />
+          )}
         </>
       )}
     </div>
