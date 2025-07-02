@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { backend } from '../../../declarations/backend';
+import React, { useEffect, useState } from "react";
 
-function MyLands({ principal }) {
+function MyLands({ principal, backend }) {
   const [lands, setLands] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,7 +14,10 @@ function MyLands({ principal }) {
   }, []);
 
   const toBase64 = (vec) => {
-    const binary = new Uint8Array(vec).reduce((acc, byte) => acc + String.fromCharCode(byte), '');
+    const binary = new Uint8Array(vec).reduce(
+      (acc, byte) => acc + String.fromCharCode(byte),
+      ""
+    );
     return `data:image/png;base64,${btoa(binary)}`;
   };
 
@@ -29,15 +31,35 @@ function MyLands({ principal }) {
       ) : (
         <ul>
           {lands.map((land, i) => (
-            <li key={i} style={{ marginBottom: '20px', padding: '10px', border: '1px solid #aaa' }}>
-              <p><strong>ID:</strong> {land.id.toString()}</p>
-              <p><strong>Name:</strong> {land.name}</p>
-              <p><strong>Size:</strong> {land.size}</p>
-              <p><strong>Coordinates:</strong> ({land.coordinates.x}, {land.coordinates.y})</p>
+            <li
+              key={i}
+              style={{
+                marginBottom: "20px",
+                padding: "10px",
+                border: "1px solid #aaa",
+              }}
+            >
+              <p>
+                <strong>ID:</strong> {land.id.toString()}
+              </p>
+              <p>
+                <strong>Name:</strong> {land.name}
+              </p>
+              <p>
+                <strong>Size:</strong> {land.size}
+              </p>
+              <p>
+                <strong>Coordinates:</strong> ({land.coordinates.x},{" "}
+                {land.coordinates.y})
+              </p>
               <img
                 src={toBase64(land.image_data)}
                 alt="Land Preview"
-                style={{ maxWidth: '300px', marginTop: '10px', border: '1px solid #333' }}
+                style={{
+                  maxWidth: "300px",
+                  marginTop: "10px",
+                  border: "1px solid #333",
+                }}
               />
             </li>
           ))}

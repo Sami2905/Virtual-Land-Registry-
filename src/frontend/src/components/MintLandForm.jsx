@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { backend } from '../../../declarations/backend';
+import React, { useState } from "react";
 
-function MintLandForm({ principal }) {
-  const [name, setName] = useState('');
-  const [x, setX] = useState('');
-  const [y, setY] = useState('');
-  const [size, setSize] = useState('');
+function MintLandForm({ principal, backend }) {
+  const [name, setName] = useState("");
+  const [x, setX] = useState("");
+  const [y, setY] = useState("");
+  const [size, setSize] = useState("");
   const [image, setImage] = useState(null);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
   const handleMint = async (e) => {
     e.preventDefault();
 
     if (!name || !x || !y || !size || !image) {
-      alert('Please fill all fields and select an image.');
+      alert("Please fill all fields and select an image.");
       return;
     }
 
@@ -21,7 +20,7 @@ function MintLandForm({ principal }) {
     const imageVec = Array.from(new Uint8Array(imageBytes));
 
     try {
-      setStatus('Minting land...');
+      setStatus("Minting land...");
       const id = await backend.mint_land(
         name,
         { x: Number(x), y: Number(y) },
@@ -31,7 +30,7 @@ function MintLandForm({ principal }) {
       setStatus(`✅ Land minted with ID: ${id}`);
     } catch (err) {
       console.error(err);
-      setStatus('❌ Error minting land.');
+      setStatus("❌ Error minting land.");
     }
   };
 
@@ -59,10 +58,16 @@ function MintLandForm({ principal }) {
 
       <div>
         <label>Image: </label>
-        <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+        />
       </div>
 
-      <button type="submit" style={{ marginTop: '10px' }}>Mint Land</button>
+      <button type="submit" style={{ marginTop: "10px" }}>
+        Mint Land
+      </button>
 
       <p>{status}</p>
     </form>

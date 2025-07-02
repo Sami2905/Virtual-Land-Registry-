@@ -1,50 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { AuthClient } from '@dfinity/auth-client';
-import { backend } from '../../declarations/backend';
-import Navbar from './components/Navbar';
-import MintLandForm from './components/MintLandForm';
-import MyLands from './components/MyLands';
-import { getIdentityProvider } from './identity';
+import React, { useEffect, useState } from "react";
+import { AuthClient } from "@dfinity/auth-client";
+import { backend } from "../../declarations/backend";
+import Navbar from "./components/Navbar";
+import MintLandForm from "./components/MintLandForm";
+import MyLands from "./components/MyLands";
+import { getIdentityProvider } from "./identity";
+import { createActor } from "./actor";
 
 function App() {
+  const [authClient, setAuthClient] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [principal, setPrincipal] = useState(null);
-  const [view, setView] = useState('mint'); // 'mint' | 'market' | 'my'
+  const [backendActor, setBackendActor] = useState(null);
+  const [view, setView] = useState("mint");
+
+  // Common logic to set authenticated user
+  const setAuthenticatedUser = (identity) => {
+    try {
+      const principalId = identity.getPrincipal().toText();
+      const actor = createActor(identity);
+
+      setPrincipal(principalId);
+      setIsAuthenticated(true);
+      setBackendActor(actor);
+    } catch (error) {
+      console.error("Authentication setup failed:", error);
+    }
+  };
 
   useEffect(() => {
-    AuthClient.create().then(async (authClient) => {
-      if (await authClient.isAuthenticated()) {
-        const identity = authClient.getIdentity();
-        const principal = identity.getPrincipal().toText();
-        setPrincipal(principal);
-        setIsAuthenticated(true);
+    AuthClient.create().then(async (client) => {
+      setAuthClient(client);
+      if (await client.isAuthenticated()) {
+        const identity = client.getIdentity();
+        setAuthenticatedUser(identity);
       }
     });
   }, []);
 
   const login = async () => {
-    const authClient = await AuthClient.create();
     await authClient.login({
       identityProvider: getIdentityProvider(),
-      onSuccess: () => window.location.reload(),
+      onSuccess: async () => {
+        const identity = authClient.getIdentity();
+        setAuthenticatedUser(identity);
+      },
     });
   };
 
+  const logout = async () => {
+    await authClient.logout();
+    setPrincipal(null);
+    setIsAuthenticated(false);
+    setBackendActor(null);
+  };
+
   return (
-    <div style={{ padding: '20px' }}>
-      <Navbar currentView={view} onNavigate={setView} />
+    <div style={{ padding: "20px" }}>
+      <Navbar
+        currentView={view}
+        onNavigate={setView}
+        isAuthenticated={isAuthenticated}
+        principal={principal}
+        onLogin={login}
+        onLogout={logout}
+      />
 
       {!isAuthenticated ? (
-        <>
-          <p>You are not logged in.</p>
-          <button onClick={login}>Login with Internet Identity</button>
-        </>
+        <p>You are not logged in.</p>
       ) : (
         <>
-          <p>Logged in as: {principal}</p>
-          {view === 'mint' && <MintLandForm principal={principal} />}
-          {view === 'my' && <MyLands principal={principal} />}
-          {view === 'market' && <p>Marketplace coming soon...</p>}
+          {view === "mint" && (
+            <MintLandForm principal={principal} backend={backendActor} />
+          )}
+          {view === "my" && (
+            <MyLands principal={principal} backend={backendActor} />
+          )}
+          {view === "market" && <p>Marketplace coming soon...</p>}
         </>
       )}
     </div>
