@@ -14,7 +14,10 @@ export default defineConfig({
     esbuildOptions: {
       define: {
         global: "globalThis",
+<<<<<<< HEAD
         'process.env': '{}',
+=======
+>>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
       },
     },
   },
