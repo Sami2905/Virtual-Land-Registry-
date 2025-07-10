@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react";
 // import ProfileMenu from "./ProfileMenu";
 import { motion, AnimatePresence } from "framer-motion";
 // Remove import of ThreeDModernProfileAvatar
 import User3DIcon from "./User3DIcon";
-=======
-import React from "react";
-import ProfileMenu from "./ProfileMenu";
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
 
 function Navbar({
   currentView,
@@ -17,7 +12,6 @@ function Navbar({
   onLogout,
   onLogin,
 }) {
-<<<<<<< HEAD
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -244,42 +238,6 @@ function Navbar({
         )}
       </div>
     </motion.nav>
-=======
-  return (
-    <nav className="navbar">
-      <a href="#" className="navbar-brand" onClick={() => onNavigate("mint")}>
-        Land Registry
-      </a>
-      <div className="navbar-links">
-        <span
-          className={`nav-link ${currentView === "mint" ? "active" : ""}`}
-          onClick={() => onNavigate("mint")}
-        >
-          Mint Land
-        </span>
-        <span
-          className={`nav-link ${currentView === "market" ? "active" : ""}`}
-          onClick={() => onNavigate("market")}
-        >
-          Marketplace
-        </span>
-        <span
-          className={`nav-link ${currentView === "my" ? "active" : ""}`}
-          onClick={() => onNavigate("my")}
-        >
-          My Lands
-        </span>
-      </div>
-
-      <div>
-        {isAuthenticated ? (
-          <ProfileMenu principal={principal} onLogout={onLogout} />
-        ) : (
-          <button onClick={onLogin}>Login</button>
-        )}
-      </div>
-    </nav>
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
   );
 }
 

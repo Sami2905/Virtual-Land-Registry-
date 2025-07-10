@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { motion, AnimatePresence } from "framer-motion";
 import Spinner from "./Spinner";
 import { animateOnScroll } from '../animations/gsapScroll';
@@ -39,18 +38,13 @@ function TrustIndicators() {
     </div>
   );
 }
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
 
 function MyLands({ principal, backend }) {
   const [lands, setLands] = useState([]);
   const [loading, setLoading] = useState(true);
 
-<<<<<<< HEAD
   const PLACEHOLDER_IMG = "/land-images/land-1.jpg";
 
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
   useEffect(() => {
     const fetchLands = async () => {
       setLoading(true);
@@ -67,7 +61,6 @@ function MyLands({ principal, backend }) {
     fetchLands();
   }, [backend]);
 
-<<<<<<< HEAD
   useEffect(() => {
     // GSAP scroll-triggered animation for section title
     animateOnScroll('.mylands-title', {
@@ -81,8 +74,6 @@ function MyLands({ principal, backend }) {
     }, { start: 'top 85%' });
   }, [loading, lands.length]);
 
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
   const toBase64 = (vec) => {
     if (!vec || vec.length === 0) {
       return "";
@@ -95,7 +86,6 @@ function MyLands({ principal, backend }) {
   };
 
   return (
-<<<<<<< HEAD
     <div style={{
       display: 'flex',
       alignItems: 'center',
@@ -197,41 +187,6 @@ function MyLands({ principal, backend }) {
           )}
         </AnimatePresence>
       </div>
-=======
-    <div>
-      <h2>My Minted Lands</h2>
-      {loading && <p className="message-text">Loading your lands...</p>}
-
-      {!loading && lands.length === 0 ? (
-        <p className="message-text">
-          You haven’t minted any lands yet. Head over to "Mint Land" to create
-          your first plot!
-        </p>
-      ) : (
-        <ul className="land-list">
-          {lands.map((land, i) => (
-            <li key={land.id.toString()} className="land-item">
-              <h3>{land.name || `Land #${land.id.toString()}`}</h3>{" "}
-              {/* heading falbackl */}
-              <img
-                src={toBase64(land.image_data)}
-                alt={`Land: ${land.name || land.id.toString()}`}
-              />
-              <p>
-                <strong>ID:</strong> {land.id.toString()}
-              </p>
-              <p>
-                <strong>Size:</strong> {land.size}
-              </p>
-              <p>
-                <strong>Coordinates:</strong> ({land.coordinates.x},{" "}
-                {land.coordinates.y})
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
     </div>
   );
 }

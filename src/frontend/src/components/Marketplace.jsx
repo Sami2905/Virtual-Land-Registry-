@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { motion, AnimatePresence } from "framer-motion";
 import Spinner from "./Spinner";
 import { IconExplore, IconOwnTrade, IconSecurity, IconInstant, IconGlobal } from "./Icon";
@@ -84,8 +83,6 @@ function FloatingIcon({ children, style = {}, ...props }) {
     </motion.div>
   );
 }
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
 
 function Marketplace({ backend, principal }) {
   const [allListings, setAllListings] = useState([]);
@@ -97,7 +94,6 @@ function Marketplace({ backend, principal }) {
     fetchData();
   }, []);
 
-<<<<<<< HEAD
   useEffect(() => {
     // GSAP scroll-triggered animation for section title
     animateOnScroll('.marketplace-title', {
@@ -121,8 +117,6 @@ function Marketplace({ backend, principal }) {
     }, { start: 'top 85%' });
   }, [loading, myUnlistedLands.length, allListings.length]);
 
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
   const fetchData = async () => {
     try {
       const [myLands, marketplaceListings] = await Promise.all([
@@ -222,7 +216,6 @@ function Marketplace({ backend, principal }) {
   };
 
   return (
-<<<<<<< HEAD
     <div style={{
       display: 'flex',
       alignItems: 'flex-start',
@@ -394,190 +387,6 @@ function Marketplace({ backend, principal }) {
           </>
         )}
       </div>
-=======
-    <div>
-      <h2>🏪 Marketplace</h2>
-      {status && (
-        <p style={{ color: status.includes("✅") ? "green" : "red" }}>
-          {status}
-        </p>
-      )}
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          {/* SECTION 1: User's unlisted lands */}
-          {myUnlistedLands.length > 0 && (
-            <>
-              <h3>🏠 Your Lands (Available to List)</h3>
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                {myUnlistedLands.map((land, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      padding: "15px",
-                      marginBottom: "20px",
-                      backgroundColor: "#f9f9f9",
-                    }}
-                  >
-                    <p>
-                      <strong>ID:</strong> {land.id.toString()}
-                    </p>
-                    <p>
-                      <strong>Name:</strong> {land.name}
-                    </p>
-                    <p>
-                      <strong>Size:</strong> {land.size}
-                    </p>
-                    <p>
-                      <strong>Coordinates:</strong> ({land.coordinates.x},{" "}
-                      {land.coordinates.y})
-                    </p>
-                    {land.image_data && land.image_data.length > 0 && (
-                      <img
-                        src={toBase64(land.image_data)}
-                        alt="Land"
-                        style={{
-                          maxWidth: "300px",
-                          marginTop: "10px",
-                          borderRadius: "4px",
-                        }}
-                      />
-                    )}
-                    <br />
-                    <button
-                      onClick={() => handleList(land.id)}
-                      style={{
-                        marginTop: "10px",
-                        padding: "8px 16px",
-                        backgroundColor: "#007bff",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      📋 List for Sale
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-
-          {/* SECTION 2: Marketplace listings */}
-          <h3>🛒 Listed Lands (Available to Buy)</h3>
-          {allListings.length === 0 ? (
-            <p>No lands currently listed in the marketplace.</p>
-          ) : (
-            <ul style={{ listStyle: "none", padding: 0 }}>
-              {allListings.map(([land, listing], i) => (
-                <li
-                  key={i}
-                  style={{
-                    border: "1px solid #aaa",
-                    borderRadius: "8px",
-                    padding: "15px",
-                    marginBottom: "20px",
-                    backgroundColor:
-                      listing.seller === principal ? "#fff3cd" : "#ffffff",
-                  }}
-                >
-                  <p>
-                    <strong>ID:</strong> {land.id.toString()}
-                  </p>
-                  <p>
-                    <strong>Name:</strong> {land.name}
-                  </p>
-                  <p>
-                    <strong>Size:</strong> {land.size}
-                  </p>
-                  <p>
-                    <strong>Coordinates:</strong> ({land.coordinates.x},{" "}
-                    {land.coordinates.y})
-                  </p>
-                  <p>
-                    <strong>💰 Price:</strong> {listing.price.toString()} ICP
-                  </p>
-                  <p>
-                    <strong>👤 Seller:</strong> {listing.seller.toText()}
-                  </p>
-                  <p>
-                    <strong>📅 Listed:</strong>{" "}
-                    {new Date(
-                      Number(listing.listed_at) / 1000000
-                    ).toLocaleDateString()}
-                  </p>
-
-                  {land.image_data && land.image_data.length > 0 && (
-                    <img
-                      src={toBase64(land.image_data)}
-                      alt="Land"
-                      style={{
-                        maxWidth: "300px",
-                        marginTop: "10px",
-                        borderRadius: "4px",
-                      }}
-                    />
-                  )}
-                  <br />
-
-                  {/* ✅ IMPROVED: Better button logic */}
-                  {listing.seller === principal ? (
-                    <div style={{ marginTop: "10px" }}>
-                      <button
-                        disabled
-                        style={{
-                          padding: "8px 16px",
-                          backgroundColor: "#6c757d",
-                          color: "white",
-                          border: "none",
-                          borderRadius: "4px",
-                          marginRight: "10px",
-                        }}
-                      >
-                        🏷️ Listed by You
-                      </button>
-                      <button
-                        onClick={() => handleUnlist(land.id)}
-                        style={{
-                          padding: "8px 16px",
-                          backgroundColor: "#dc3545",
-                          color: "white",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        ❌ Remove Listing
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => handleBuy(land.id)}
-                      style={{
-                        marginTop: "10px",
-                        padding: "8px 16px",
-                        backgroundColor: "#28a745",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      💰 Buy Now
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
     </div>
   );
 }

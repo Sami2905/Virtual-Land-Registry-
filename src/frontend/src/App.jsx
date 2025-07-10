@@ -7,14 +7,11 @@ import MyLands from "./components/MyLands";
 import Marketplace from "./components/Marketplace";
 import { getIdentityProvider } from "./identity";
 import { createActor } from "./actor";
-<<<<<<< HEAD
 import { AnimatePresence, motion } from "framer-motion";
 import Landing from "./components/Landing";
 import HowItWorks from './components/sections/HowItWorks';
 import Footer from './components/sections/Footer';
 import Cursor from './components/ui/Cursor';
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
 
 function App() {
   const [authClient, setAuthClient] = useState(null);
@@ -65,7 +62,6 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
       {isAuthenticated && <Cursor />}
       {isAuthenticated ? (
         <>
@@ -123,55 +119,6 @@ function App() {
       ) : (
         <Landing onGetStarted={login} />
       )}
-=======
-      <Navbar
-        currentView={view}
-        onNavigate={setView}
-        isAuthenticated={isAuthenticated}
-        principal={principal}
-        onLogin={login}
-        onLogout={logout}
-      />
-
-      <main className="content-wrapper">
-        {!isAuthenticated ? (
-          <p className="message-text">
-            You are not logged in. Please log in to explore the Virtual Land
-            Registry.
-          </p>
-        ) : (
-          <>
-            {view === "mint" && (
-              <MintLandForm principal={principal} backend={backendActor} />
-            )}
-            {view === "my" && (
-              <MyLands principal={principal} backend={backendActor} />
-            )}
-            {view === "market" && (
-              <Marketplace principal={principal} backend={backendActor} />
-            )}
-          </>
-        )}
-      </main>
-
-      <footer className="app-footer">
-        <p>
-          &copy; {new Date().getFullYear()} Virtual Land Registry. All rights
-          reserved.
-        </p>
-        <p>
-          Built with ❤️ on the{" "}
-          <a
-            href="https://dfinity.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Internet Computer
-          </a>
-          .
-        </p>
-      </footer>
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
     </>
   );
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
@@ -14,9 +13,6 @@ const steps = [
   { label: "Confirm & Mint" },
   { label: "Success" },
 ];
-=======
-import React, { useState } from "react";
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
 
 function MintLandForm({ principal, backend }) {
   const [name, setName] = useState("");
@@ -26,7 +22,6 @@ function MintLandForm({ principal, backend }) {
   const [image, setImage] = useState(null);
   const [status, setStatus] = useState("");
   const [fileInputKey, setFileInputKey] = useState(0);
-<<<<<<< HEAD
   const [currentStep, setCurrentStep] = useState(0);
   const [txHash, setTxHash] = useState("");
 
@@ -51,14 +46,9 @@ function MintLandForm({ principal, backend }) {
   const handleMint = async (e) => {
     e.preventDefault();
     setCurrentStep(1);
-=======
-
-  const handleMint = async (e) => {
-    e.preventDefault();
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
 
     if (!name.trim() || x === "" || y === "" || !size.trim() || !image) {
-      setStatus("❌ Please fill all fields and select an image.");
+      setStatus(" 534 Please fill all fields and select an image.");
       return;
     }
 
@@ -66,13 +56,12 @@ function MintLandForm({ principal, backend }) {
     const parsedY = Number(y);
 
     if (isNaN(parsedX) || isNaN(parsedY)) {
-      setStatus("❌ Coordinates X and Y must be valid numbers.");
+      setStatus(" 534 Coordinates X and Y must be valid numbers.");
       return;
     }
 
     if (!(image instanceof File)) {
-      setStatus("❌ Invalid image file selected. Please select a valid image.");
-
+      setStatus(" 534 Invalid image file selected. Please select a valid image.");
       setImage(null);
       setFileInputKey((prevKey) => prevKey + 1);
       return;
@@ -84,7 +73,7 @@ function MintLandForm({ principal, backend }) {
       imageVec = Array.from(new Uint8Array(imageBytes));
     } catch (imageError) {
       console.error("Error reading image file:", imageError);
-      setStatus("❌ Failed to read image file. Please try another image.");
+      setStatus(" 534 Failed to read image file. Please try another image.");
       return;
     }
 
@@ -96,8 +85,7 @@ function MintLandForm({ principal, backend }) {
         size.trim(),
         imageVec
       );
-      setStatus(`✅ Land minted with ID: ${id}.`);
-<<<<<<< HEAD
+      setStatus(` 197 Land minted with ID: ${id}.`);
       setTxHash(id.toString());
       setCurrentStep(2);
       confetti({
@@ -106,9 +94,6 @@ function MintLandForm({ principal, backend }) {
         origin: { y: 0.6 },
         zIndex: 9999,
       });
-=======
-
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
       setName("");
       setX("");
       setY("");
@@ -117,24 +102,18 @@ function MintLandForm({ principal, backend }) {
       setFileInputKey((prevKey) => prevKey + 1);
     } catch (err) {
       console.error("Error calling backend.mint_land:", err);
-
-      let errorMessage = "❌ Error minting land. Please try again.";
+      let errorMessage = " 534 Error minting land. Please try again.";
       if (err && typeof err === "object" && "message" in err) {
         errorMessage += ` Details: ${err.message}`;
       } else if (typeof err === "string") {
         errorMessage += ` Details: ${err}`;
       }
-
       setStatus(errorMessage + " (Check console for more details)");
-<<<<<<< HEAD
       setCurrentStep(2);
-=======
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
     }
   };
 
   return (
-<<<<<<< HEAD
     <div style={{
       display: 'flex',
       alignItems: 'center',
@@ -319,12 +298,12 @@ function MintLandForm({ principal, backend }) {
             {status && (
               <Alert
                 key={status}
-                type={status.startsWith("✅") ? "success" : status.startsWith("❌") ? "error" : "info"}
+                type={status.startsWith(" 197") ? "success" : status.startsWith(" 534") ? "error" : "info"}
                 message={status}
                 showIcon={true}
                 closable={true}
                 onClose={() => setStatus("")}
-                style={{ marginTop: 18, textAlign: "center", fontWeight: 600, fontSize: "1rem", color: status.startsWith("✅") ? '#22c55e' : status.startsWith("❌") ? '#ef4444' : '#fff', background: '#181a1a', borderRadius: 8, padding: '0.7rem 1.2rem' }}
+                style={{ marginTop: 18, textAlign: "center", fontWeight: 600, fontSize: "1rem", color: status.startsWith(" 197") ? '#22c55e' : status.startsWith(" 534") ? '#ef4444' : '#fff', background: '#181a1a', borderRadius: 8, padding: '0.7rem 1.2rem' }}
               />
             )}
           </AnimatePresence>
@@ -335,87 +314,3 @@ function MintLandForm({ principal, backend }) {
 }
 
 export default MintLandForm;
-=======
-    <form onSubmit={handleMint}>
-      <h2>Mint Your New Land</h2>
-      <div className="form-group">
-        <label htmlFor="landName">Land Name:</label>
-        <input
-          id="landName"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="e.g., Green Valley Plot"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="coordX">Coordinate X:</label>
-        <input
-          id="coordX"
-          value={x}
-          onChange={(e) => setX(e.target.value)}
-          type="number"
-          placeholder="e.g., 100"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="coordY">Coordinate Y:</label>
-        <input
-          id="coordY"
-          value={y}
-          onChange={(e) => setY(e.target.value)}
-          type="number"
-          placeholder="e.g., 250"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="landSize">Land Size:</label>
-        <input
-          id="landSize"
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
-          type="text"
-          placeholder="e.g., 10x10 meters"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="landImage">Land Image:</label>
-        <input
-          key={fileInputKey} //re render
-          id="landImage"
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-          required
-        />
-      </div>
-
-      <button type="submit">Mint Land</button>
-
-      {status && (
-        <p
-          className={`status-message ${
-            status.startsWith("✅")
-              ? "success"
-              : status.startsWith("❌")
-              ? "error"
-              : ""
-          }`}
-        >
-          {status}
-        </p>
-      )}
-    </form>
-  );
-}
-
-export default MintLandForm;
->>>>>>> 214d2a7dce11fe48d8b3f833c63568c93b3f7173
